@@ -6,11 +6,10 @@ namespace Electricity.Persistence
 {
     public class ElectricityRepository(ElectricityDbContext db) : IRepository
     {
-        public async Task<ElectricityUsage> CreateAsync(ElectricityUsage entity)
+        public async Task<bool> CreateRangeAsync(List<ElectricityUsage> entity)
         {
-            await db.Set<ElectricityUsage>().AddAsync(entity);
-            await db.SaveChangesAsync();
-            return entity;
+            await db.Set<ElectricityUsage>().AddRangeAsync(entity);
+            return await db.SaveChangesAsync() > 0;
         }
 
         public async Task<IReadOnlyList<ElectricityUsage>> GetAllAsync()

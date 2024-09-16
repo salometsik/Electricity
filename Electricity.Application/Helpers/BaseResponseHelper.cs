@@ -13,14 +13,6 @@ namespace Electricity.Application.Helpers
             return response;
         }
 
-        public static T HandleNotFound<T>(this T response) where T : BaseResponse
-        {
-            response.StatusCode = HttpStatusCode.NotFound;
-            response.Success = false;
-            response.Message = "Object not found";
-            return response;
-        }
-
         public static T HandleNoContent<T>(this T response) where T : BaseResponse
         {
             response.StatusCode = HttpStatusCode.NoContent;

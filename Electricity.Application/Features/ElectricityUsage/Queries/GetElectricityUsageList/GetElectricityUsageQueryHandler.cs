@@ -18,7 +18,7 @@ namespace Electricity.Application.Features.ElectricityUsage.Queries.GetElectrici
                 Tinklas = i.Tinklas,
                 TotalConsumption = i.TotalConsumption,
                 DataCount = i.DataCount,
-                Date = i.Date
+                //Date = i.Date
             }).ToList();
             return response;
         }

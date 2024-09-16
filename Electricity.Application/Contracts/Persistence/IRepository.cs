@@ -4,7 +4,7 @@ namespace Electricity.Application.Contracts.Persistence
 {
     public interface IRepository
     {
-        Task<ElectricityUsage> CreateAsync(ElectricityUsage entity);
+        Task<bool> CreateRangeAsync(List<ElectricityUsage> entity);
         Task<IReadOnlyList<ElectricityUsage>> GetAllAsync();
     }
 }
