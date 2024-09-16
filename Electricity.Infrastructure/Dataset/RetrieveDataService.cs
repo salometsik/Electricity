@@ -42,6 +42,27 @@ namespace Electricity.Infrastructure.Dataset
                         .Where(d => d.Type == "Butas")
                         .ToList());
                 }
+                if (allFilteredData.Count == 0)
+                    return [];
+
+                if (allFilteredData.Any(x => x.Date >= DateTime.UtcNow.AddMonths(-2)))
+                    allFilteredData = allFilteredData.Where(x => x.Date >= DateTime.UtcNow.AddMonths(-2)).ToList();
+                else
+                {
+                    var grouped = allFilteredData
+                        .OrderByDescending(x => x.Date)
+                        .GroupBy(x => new DateTime(x.Date.Year, x.Date.Month, 1))
+                        .Take(2)
+                        .ToList();
+                    allFilteredData.AddRange(grouped
+                                    .SelectMany(group => group.Select(i => new ElectricityDataModel
+                                    {
+                                        Tinklas = i.Tinklas,
+                                        ElectricityConsumption = i.ElectricityConsumption,
+                                        Date = i.Date
+                                    })));
+                }
+
                 return allFilteredData;
             }
             catch (Exception ex)
@@ -91,7 +112,6 @@ namespace Electricity.Infrastructure.Dataset
                                 .SelectNodes("//a[contains(@href, '.csv')]")
                                 ?.Select(node => node.GetAttributeValue("href", ""))
                                 .Where(link => !string.IsNullOrEmpty(link))
-                                .Take(2)
                                 .ToList();
 
                 if (csvLinks == null)
