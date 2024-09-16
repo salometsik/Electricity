@@ -8,7 +8,7 @@ namespace Electricity.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddTransient<IRetrieveDataService, RetrieveDataService>();
+            services.AddHttpClient<IRetrieveDataService, RetrieveDataService>();
             return services;
         }
     }

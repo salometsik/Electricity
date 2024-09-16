@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Persistence", "Electricity.Persistence\Electricity.Persistence.csproj", "{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Tests", "Electricity.Tests\Electricity.Tests.csproj", "{6876C136-B646-4EB1-A79A-6C189FE0C063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{231038C0-3786-4C39-B650-8B84003DC93E} = {8DA46DFF-ECFE-466A-BFE9-5F6DD0EFF51D}
 		{D1B5FCA7-482C-4FC1-AF05-D795FF65A386} = {8DA46DFF-ECFE-466A-BFE9-5F6DD0EFF51D}
 		{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673} = {8DA46DFF-ECFE-466A-BFE9-5F6DD0EFF51D}
+		{6876C136-B646-4EB1-A79A-6C189FE0C063} = {3A3F1147-7E8C-4904-9957-1542C657AB18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD1FF990-B923-414E-AB75-18B253DBD950}

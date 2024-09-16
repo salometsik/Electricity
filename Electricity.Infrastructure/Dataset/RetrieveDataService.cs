@@ -9,18 +9,17 @@ using System.Globalization;
 
 namespace Electricity.Infrastructure.Dataset
 {
-    public class RetrieveDataService(ILogger<RetrieveDataService> _logger) : IRetrieveDataService
+    public class RetrieveDataService(ILogger<RetrieveDataService> _logger, HttpClient _httpClient) : IRetrieveDataService
     {
         public async Task<List<ElectricityDataModel>> GetElectricityData()
         {
-
             var csvUrls = await GetCsvFileLinksFromPage();
             if (csvUrls.Count == 0)
-                return [];
+                return new List<ElectricityDataModel>();
 
             var csvContents = await DownloadCsvFiles(csvUrls);
             if (csvContents.Count == 0)
-                return [];
+                return new List<ElectricityDataModel>();
 
             return await FilterCsvData(csvContents);
         }
@@ -32,55 +31,55 @@ namespace Electricity.Infrastructure.Dataset
             {
                 foreach (var csvData in csvContents)
                 {
-                    using var reader = new StringReader(csvData);
-                    using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-                    csv.Context.RegisterClassMap<ElectricityDataMap>();
-
-                    var records = csv.GetRecords<ElectricityDataModel>().ToList();
-
-                    allFilteredData.AddRange(records
+                    var records = ParseCsv(csvData);
+                    if (records != null)
+                        allFilteredData.AddRange(records
                         .Where(d => d.Type == "Butas")
                         .ToList());
                 }
-                if (allFilteredData.Count == 0)
-                    return [];
-
-                if (allFilteredData.Any(x => x.Date >= DateTime.UtcNow.AddMonths(-2)))
-                    allFilteredData = allFilteredData.Where(x => x.Date >= DateTime.UtcNow.AddMonths(-2)).ToList();
-                else
-                {
-                    var grouped = allFilteredData
-                        .OrderByDescending(x => x.Date)
-                        .GroupBy(x => new DateTime(x.Date.Year, x.Date.Month, 1))
-                        .Take(2)
-                        .ToList();
-                    allFilteredData.AddRange(grouped
-                                    .SelectMany(group => group.Select(i => new ElectricityDataModel
-                                    {
-                                        Tinklas = i.Tinklas,
-                                        ElectricityConsumption = i.ElectricityConsumption,
-                                        Date = i.Date
-                                    })));
-                }
-
-                return allFilteredData;
+                return FilterByDate(allFilteredData);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Could not get electricity data");
-                return [];
+                return new List<ElectricityDataModel>();
             }
         }
+        List<ElectricityDataModel> ParseCsv(string csvData)
+        {
+            try
+            {
+                using var reader = new StringReader(csvData);
+                using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+                csv.Context.RegisterClassMap<ElectricityDataMap>();
+                return csv.GetRecords<ElectricityDataModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error parsing CSV data");
+                return null;
+            }
+        }
+        List<ElectricityDataModel> FilterByDate(List<ElectricityDataModel> allFilteredData)
+        {
+            if (allFilteredData.Count == 0)
+                return allFilteredData;
 
+                return allFilteredData
+                    .OrderByDescending(x => x.Date)
+                    .GroupBy(x => new DateTime(x.Date.Year, x.Date.Month, 1))
+                    .Take(2)
+                    .SelectMany(group => group)
+                    .ToList();
+        }
         async Task<List<string>> DownloadCsvFiles(List<string> csvUrls)
         {
             try
             {
-                using var client = new HttpClient();
                 var csvContents = new List<string>();
                 foreach (var url in csvUrls)
                 {
-                    var csvData = await client.GetStringAsync(url);
+                    var csvData = await _httpClient.GetStringAsync(url);
                     csvContents.Add(csvData);
                 }
                 return csvContents;
@@ -88,21 +87,19 @@ namespace Electricity.Infrastructure.Dataset
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Could not get csv contents");
-                return [];
+                return new List<string>();
             }
         }
-
         async Task<List<string>> GetCsvFileLinksFromPage()
         {
             var baseUrl = "https://data.gov.lt";
             try
             {
-                using var client = new HttpClient();
-                var response = await client.GetAsync(baseUrl +
+                var response = await _httpClient.GetAsync(baseUrl +
                     "/dataset/siame-duomenu-rinkinyje-pateikiami-atsitiktinai-parinktu-1000-buitiniu-vartotoju-automatizuotos-apskaitos-elektriniu-valandiniai-duomenys");
 
                 if (!response.IsSuccessStatusCode)
-                    return [];
+                    return new List<string>();
 
                 var htmlContent = await response.Content.ReadAsStringAsync();
                 var htmlDoc = new HtmlDocument();
@@ -112,23 +109,21 @@ namespace Electricity.Infrastructure.Dataset
                                 .SelectNodes("//a[contains(@href, '.csv')]")
                                 ?.Select(node => node.GetAttributeValue("href", ""))
                                 .Where(link => !string.IsNullOrEmpty(link))
+                                .Select(link => baseUrl + link)
                                 .ToList();
 
-                if (csvLinks == null)
+                if (csvLinks == null || (csvLinks != null && csvLinks.Count == 0))
                 {
                     _logger.LogError("Could not get csv links");
-                    return [];
+                    return new List<string>();
                 }
 
-                var absoluteCsvLinks = csvLinks
-                                    .Select(x => baseUrl + x)
-                                    .ToList();
-                return absoluteCsvLinks;
+                return csvLinks;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error getting csv file links");
-                return [];
+                return new List<string>();
             }
         }
     }
