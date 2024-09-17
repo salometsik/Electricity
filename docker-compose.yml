@@ -14,9 +14,9 @@ services:
     image: postgres:latest
     container_name: electricity.database
     environment:
-        - POSTGRES_DB = electricitydb
-        - POSTGRES_USER = postgres
-        - POSTGRES_PASSWORD = postgres
+        - POSTGRES_DB=electricitydb
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
     volumes:
         - ./.containers/electricitydb:/var/lib/postresql/data
     ports:
