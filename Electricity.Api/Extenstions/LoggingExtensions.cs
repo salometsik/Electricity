@@ -43,16 +43,9 @@ namespace Electricity.Api.Extensions
             {
                 //default: HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms
                 options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
-                options.EnrichDiagnosticContext = async (diagnosticContext, httpContext) =>
+                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
                 {
-
                     diagnosticContext.Set("RequestQueryString", httpContext.Request.QueryString.ToString());
-                    diagnosticContext.Set("IdentityName", httpContext.User.Identity?.Name);
-                    if (httpContext.Request.Body.Length < 20000 && httpContext.Request.Body.Length > 0)
-                    {
-                        httpContext.Request.Body.Position = 0;
-                        diagnosticContext.Set("RequestBody", await new StreamReader(httpContext.Request.Body).ReadToEndAsync());
-                    }
                 };
             });
         }
