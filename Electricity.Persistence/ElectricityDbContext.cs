@@ -19,9 +19,9 @@ namespace Electricity.Persistence
         public ElectricityDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ElectricityDbContext>();
-            var connectionString = "User Id=postgres;Password=admin;Host=localhost;Database=electricitydb;";
+            var connectionString = "User Id=postgres;Password=postgres;Host=electricity.database;Database=electricitydb;Port=5432;";
             // Prod
-            //var connectionString = "User Id=postgres;Password=admin;Host=localhost;Database=electricitydb;";
+            //var connectionString = "User Id=postgres;Password=postgres;Host=electricity.database;Database=electricitydb;Port=5432;";
             var migrationsAssembly = "Electricity.Persistence";
             optionsBuilder.UseNpgsql(connectionString, a => a.MigrationsAssembly(migrationsAssembly));
 
