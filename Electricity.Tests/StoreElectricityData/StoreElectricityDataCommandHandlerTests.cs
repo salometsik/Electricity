@@ -2,7 +2,6 @@
 using Electricity.Application.Contracts.Persistence;
 using Electricity.Application.Features.ElectricityUsage.Commands;
 using Electricity.Application.Models;
-using Electricity.Application.Models.Base;
 using Electricity.Core.Entities;
 using Moq;
 
@@ -12,13 +11,11 @@ namespace Electricity.Tests.StoreElectricityData
     {
         readonly Mock<IRetrieveDataService> _retrieveDataServiceMock;
         readonly Mock<IRepository> _repositoryMock;
-        readonly BaseResponse _response;
         readonly StoreElectricityDataCommandHandler _handler;
         public StoreElectricityDataCommandHandlerTests()
         {
             _retrieveDataServiceMock = new Mock<IRetrieveDataService>();
             _repositoryMock = new Mock<IRepository>();
-            _response = new BaseResponse();
 
             _handler = new StoreElectricityDataCommandHandler(_retrieveDataServiceMock.Object, _repositoryMock.Object);
         }

@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  electricity.api:
+    image: ${DOCKER_REGISTRY-}electricityapi
+    build:
+      context: .
+      dockerfile: Electricity.Api/Dockerfile
+    ports:
+        - "5000:5000"
+        - "5001:5001"
+
+  electricity.database:
+    image: postgres:latest
+    container_name: electricity.database
+    environment:
+        - POSTGRES_DB = electricitydb
+        - POSTGRES_USER = postgres
+        - POSTGRES_PASSWORD = postgres
+    volumes:
+        - ./.containers/electricitydb:/var/lib/postresql/data
+    ports:
+        - 5432:5432

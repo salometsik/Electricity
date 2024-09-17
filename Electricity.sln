@@ -3,21 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Api", "Electricity.Api\Electricity.Api.csproj", "{D94D5105-44E1-4DE4-A923-C4F62A11C8DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Electricity.Api", "Electricity.Api\Electricity.Api.csproj", "{D94D5105-44E1-4DE4-A923-C4F62A11C8DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8DA46DFF-ECFE-466A-BFE9-5F6DD0EFF51D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3A3F1147-7E8C-4904-9957-1542C657AB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Application", "Electricity.Application\Electricity.Application.csproj", "{DE054A22-9E3E-4F35-BE6E-A3391C4D89BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Electricity.Application", "Electricity.Application\Electricity.Application.csproj", "{DE054A22-9E3E-4F35-BE6E-A3391C4D89BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Core", "Electricity.Core\Electricity.Core.csproj", "{231038C0-3786-4C39-B650-8B84003DC93E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Electricity.Core", "Electricity.Core\Electricity.Core.csproj", "{231038C0-3786-4C39-B650-8B84003DC93E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Infrastructure", "Electricity.Infrastructure\Electricity.Infrastructure.csproj", "{D1B5FCA7-482C-4FC1-AF05-D795FF65A386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Electricity.Infrastructure", "Electricity.Infrastructure\Electricity.Infrastructure.csproj", "{D1B5FCA7-482C-4FC1-AF05-D795FF65A386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Persistence", "Electricity.Persistence\Electricity.Persistence.csproj", "{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Electricity.Persistence", "Electricity.Persistence\Electricity.Persistence.csproj", "{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.Tests", "Electricity.Tests\Electricity.Tests.csproj", "{6876C136-B646-4EB1-A79A-6C189FE0C063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Electricity.Tests", "Electricity.Tests\Electricity.Tests.csproj", "{6876C136-B646-4EB1-A79A-6C189FE0C063}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F9B3D95C-8407-45D4-B009-70FEBE9764F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electricity.IntegrationTests", "..\Electricity.IntegrationTests\Electricity.IntegrationTests.csproj", "{F3363BB4-947F-4FA2-BB98-765D4BBB2A8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6876C136-B646-4EB1-A79A-6C189FE0C063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B3D95C-8407-45D4-B009-70FEBE9764F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B3D95C-8407-45D4-B009-70FEBE9764F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B3D95C-8407-45D4-B009-70FEBE9764F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B3D95C-8407-45D4-B009-70FEBE9764F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3363BB4-947F-4FA2-BB98-765D4BBB2A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3363BB4-947F-4FA2-BB98-765D4BBB2A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3363BB4-947F-4FA2-BB98-765D4BBB2A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3363BB4-947F-4FA2-BB98-765D4BBB2A8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +72,7 @@ Global
 		{D1B5FCA7-482C-4FC1-AF05-D795FF65A386} = {8DA46DFF-ECFE-466A-BFE9-5F6DD0EFF51D}
 		{D026B61F-B2EB-4A38-9FFB-F5B00F8DB673} = {8DA46DFF-ECFE-466A-BFE9-5F6DD0EFF51D}
 		{6876C136-B646-4EB1-A79A-6C189FE0C063} = {3A3F1147-7E8C-4904-9957-1542C657AB18}
+		{F3363BB4-947F-4FA2-BB98-765D4BBB2A8B} = {3A3F1147-7E8C-4904-9957-1542C657AB18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD1FF990-B923-414E-AB75-18B253DBD950}
