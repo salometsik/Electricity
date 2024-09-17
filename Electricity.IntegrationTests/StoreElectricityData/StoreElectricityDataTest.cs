@@ -18,14 +18,11 @@ namespace Electricity.IntegrationTests.StoreElectricityData
         {
             var serviceCollection = new ServiceCollection();
 
-            // Set up in-memory database
             serviceCollection.AddDbContext<ElectricityDbContext>(options =>
                 options.UseInMemoryDatabase("TestDb"));
 
-            // Set up mock retrieve data service
             _mockRetrieveDataService = new Mock<IRetrieveDataService>();
 
-            // Register dependencies
             serviceCollection.AddScoped(_ => _mockRetrieveDataService.Object);
             serviceCollection.AddScoped<IRepository, ElectricityRepository>();
             serviceCollection.AddScoped<StoreElectricityDataCommandHandler>();
